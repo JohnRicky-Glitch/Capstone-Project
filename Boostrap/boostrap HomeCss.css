@@ -1,0 +1,307 @@
+
+   :root {
+  --background: 	#ffffff;
+  --navbar-width: 256px;
+  --navbar-width-min: 80px;
+  --navbar-dark-primary: #640d14;
+  --navbar-dark-secondary: #640d14;
+  --navbar-light-primary: #ffffff;
+  --navbar-light-secondary: #ffffff;
+}
+
+
+
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the left */
+    padding: 5px 15px; /* Reduced padding to make the header smaller */
+    background-color: #640d14; /* Same color as the sidebar */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Reduced shadow for a more subtle look */
+    position: fixed; /* Fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* Reduced height of the header */
+    z-index: 1000;
+}
+
+#header img {
+    width: 100px; /* Adjusted width */
+    height: auto;
+    margin-right: 15px; /* Adjusted spacing */
+}
+
+.sidebar {
+    margin-top: 50px; /* Adjusted for new header height */
+}
+
+html, body {
+    margin-top: 50px; /* Adjusted for new header height */
+    background: var(--background);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.main-content {
+    margin-top: 70px; /* Ensure main content doesn't overlap with the header */
+    margin-left: 270px;
+    padding: 20px;
+}
+
+    html, body {
+      margin: 0;
+      background: var(--background);
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    
+    /* Sidebar Styles */
+    .sidebar {
+      position: absolute;
+      left: 1vw;
+      top: 1vw;
+      width: var(--navbar-width);
+      height: calc(100% - 2vw);
+      background: var(--navbar-dark-primary);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      color: var(--navbar-light-primary);
+      overflow: hidden;
+      user-select: none;
+      transition: width 0.2s;
+    }
+    
+    .sidebar .profile {
+      padding: 20px;
+      background: var(--navbar-dark-secondary);
+      border-radius: 16px;
+      text-align: center;
+    }
+    
+    .sidebar .profile h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    
+    .sidebar .profile span {
+      color: var(--navbar-light-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .sidebar ul.menu {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      flex: 1;
+    }
+    
+    .sidebar ul.menu li {
+      margin: 20px 0;
+      transition: color 0.2s;
+    }
+    
+    .sidebar ul.menu li a {
+      color: var(--navbar-light-secondary);
+      text-decoration: none;
+      padding: 10px 20px;
+      display: block;
+      transition: color 0.2s;
+    }
+    
+    .sidebar ul.menu li a:hover {
+      color: var(--navbar-dark-primary);
+      background-color: var(--background);
+      border-radius: 16px;
+    }
+    
+    
+    .sidebar button {
+      margin: 20px;
+      padding: 10px;
+      background-color: #640d14;
+      background-color: var(--navbar-dark-secondary);
+      color: var(--navbar-light-primary);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.2s;
+    }
+
+    
+    /* Toggleable Sidebar */
+    #nav-toggle:checked ~ .sidebar {
+      width: var(--navbar-width-min);
+    }
+    #nav-toggle:checked ~ .sidebar .profile h2,
+    #nav-toggle:checked ~ .sidebar .profile span,
+    #nav-toggle:checked ~ .sidebar ul.menu li a {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s;
+    }
+    
+    #nav-toggle:checked ~ .sidebar ul.menu li a {
+      padding: 10px 10px;
+    }
+    
+    #nav-toggle:checked ~ .sidebar button .logout {
+      display: none;
+    }
+    
+  
+
+
+/* Logout Button*/
+.logout{
+    width: 140px;
+    height: auto;
+    float: left;
+    transition: .5s linear;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 15px;
+    text-align: center;
+    margin: 0 5px;
+    background: transparent;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: #ffffff;
+  }
+  
+  .logout:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    width: 100%;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid transparent;
+    box-sizing: border-box;
+    transform: translateX(100%);
+  }
+  
+  .logout:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    border-top: 4px solid transparent;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    transform: translateX(-100%);
+  }
+  
+  .logout:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  
+  .logout:hover:before {
+    border-color: #ffffff;
+    height: 100%;
+    transform: translateX(0);
+    transition: .3s transform linear, .3s height linear .3s;
+  }
+  
+  .logout:hover:after {
+    border-color: #ffffff;
+    height: 100%;
+    transform: translateX(0);
+    transition: .3s transform linear, .3s height linear .5s;
+  }
+  
+  button {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: transparent;
+  }
+
+
+  .Notif{
+
+
+  --hover-shadows: 16px 16px 33px #121212, -16px -16px 33px #303030;
+  --accent: fuchsia;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  border: none;
+  border-radius: 1.1em;
+  background-color: #212121;
+  cursor: pointer;
+  color: white;
+  padding: 1em 2em;
+  transition: box-shadow ease-in-out 0.3s, background-color ease-in-out 0.1s,
+    letter-spacing ease-in-out 0.1s, transform ease-in-out 0.1s;
+  box-shadow: 13px 13px 10px #1c1c1c, -13px -13px 10px #262626;
+}
+
+.Notif:hover {
+    box-shadow: var(--hover-shadows);
+  }
+  
+  .Notif:active {
+    box-shadow: var(--hover-shadows), var(--accent) 0px 0px 30px 5px;
+    background-color: var(--accent);
+    transform: scale(0.95);
+  }
+  /* end of button*/
+
+
+
+
+  /*MainContent*/
+
+  .main-content {
+    margin-left: 270px;
+    padding: 20px;
+}
+
+.dashboard-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.card h3 {
+    margin: 0 0 10px;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #640d14;
+    color: white;
+}
+
+  
+  
