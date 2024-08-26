@@ -1,0 +1,317 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+    
+}
+/*BackGround start*/
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('https://i1.wp.com/static.web-backgrounds.net/uploads/2012/08/City_Landscape_Background.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+/*BackGround end*/
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    padding: 30px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    /* background: black; */
+    }
+    
+.logo{
+    font-size: 2em;
+    color: white;
+    user-select: none;
+}
+
+.navigation a{
+    position: relative;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: White;
+    text-decoration: none;
+    margin-left: 40px;
+}
+/*Animation Header Start*/
+.navigation a::after{
+content: '';
+position: absolute;
+left: 0;
+bottom: -6px;
+width: 100%;
+height: 3px;
+background-color: white;
+border-radius: 5px;
+transform-origin:right;
+transform: scaleX(0);
+transition: transform .2s;
+}
+
+.navigation a:hover::after{
+    transform-origin: left;
+    transform: scaleX(1) ;
+}
+
+/*Animation Header End*/
+
+
+.navigation .login-button{
+
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid white;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: white;
+    font-weight: 500;
+    margin: 40px;
+    transition: .3s;
+}
+
+.navigation .login-button:hover{
+background-color: white;
+color: black;
+
+}
+
+
+/* Login Style start*/
+
+/* Container design (The Box) style Start*/
+.wrapper{
+position: relative;
+width: 400px;
+height: 440px;
+background: transparent;
+border: 2px solid rgba(255, 255, 255, .5);
+border-radius: 20px;
+backdrop-filter: blur(30px);
+box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+display: flex;
+justify-content: center;
+align-items: center;
+/* javascript animation Start*/
+transform: scale(0);
+transition: transfrom .5 ease height .2 ease;
+transition: transfrom .5 ease width .2 ease;
+overflow: hidden;
+/* javascript animation End*/
+}
+
+
+/* javascript active/remove Start*/
+.wrapper.active{
+    height: 670px;
+    width: 520px;
+}
+
+
+.wrapper .form-box{
+    width: 100%;
+    padding: 40px;
+}
+
+.wrapper .form-box.login{
+    transition: .18s ease;
+    transform: translate(0);
+}
+.wrapper.active .form-box.login{
+    transition: none;
+    transform: translateX(-550px);
+}
+
+.wrapper.active .form-box.register{
+
+    transition: .18s ease;
+    transform: translate(0);
+}
+
+.wrapper .form-box.register{
+    position: absolute;
+    transition: none;
+    transform: translateX(400px);
+}
+
+.wrapper.active-open{
+    transform: scale(1);
+
+}
+
+
+
+/* .wrapper.active-close{
+    transform: scale(0);
+
+} */
+/* javascript active/remove End*/
+
+
+
+.wrapper .icon-close{
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background: transparent;
+    font-size: 2em;
+    color: rgb(0, 0, 0);
+    display: no;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1;
+    
+}
+
+.form-box h2{
+    font-size: 2em;
+    color: black;
+    text-align: center;
+}
+
+
+
+/* Container design (The Box) style End*/
+
+
+/* input Box Style start*/
+.input-box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid black;
+    margin: 30px 0;
+
+}
+.input-box label{
+    position: absolute;
+    top: 50%;
+    left: 5px ;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: black;
+    pointer-events: none;
+    transition: .5s;
+}
+
+/* username/Password Animation Start*/
+.input-box input:focus~label,
+.input-box input:valid~label{
+    top: -5px;
+}
+/* username/Password Animation End*/
+
+/* username/Password start*/
+.input-box input{
+    width: 100%;
+    height: 100%;
+    font-size: 1em;
+    color: black;
+    font-weight: 600;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0 35px 0 5px;
+}
+
+.input-box ion-icon{
+position: absolute;
+right: 8px;
+font-size: 1.2em;
+color: black;
+line-height: 57px;
+}
+/* username/Password start*/
+
+
+
+/* input Box Style End*/
+
+
+
+/* Remember Me Style Start*/
+.remember-forgot{
+font-size: .9em;
+color: black;
+font-weight: 500;
+margin: -15px 0 15px;
+display: flex;
+justify-content: space-between;
+}
+
+.remember-forgot label input{
+    accent-color: black;
+    margin-right: 3px;
+
+}
+
+.remember-forgot a{
+
+    color: black;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover{
+    text-decoration: underline;
+}
+
+/* Remember Me Style End*/
+
+
+/* Submit button Style Start*/
+
+.lbtn{
+    width: 100%;
+    height: 45px;
+    background: black;
+    color: white;
+    font-weight: 400;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+/* Submit button Style Start*/
+
+
+/* Register Style Start*/
+.register{
+    font-size: .9em;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-weight: 500;
+    margin: 25px 0 10px ;
+}
+
+.register p a{
+
+    color: rgb(54, 13, 201);
+    text-decoration: none;
+    font-weight: 600;
+}
+.register p a:hover{
+    text-decoration: underline;
+}
+
+/* Register Style End*/
