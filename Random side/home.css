@@ -119,8 +119,26 @@ line-height: 50px;
 
 .sidebar ul li a:hover{
     background-color: white;
-    color:blue;
+    color:rgb(0, 0, 0);
+    font-weight: 550;
 } 
+
+
+/* =========btn======== */
+.sidebar #sidebar_btn{
+    position: absolute;
+    top: .4rem;
+    left: 50%;
+    font-size: 1.2rem;
+    line-height: 50px;
+    transform: translateX(-50%);
+    cursor: pointer;
+
+}
+
+.sidebar.active #sidebar_btn{
+    left: 90%;
+}
 
 /* =========ICON======== */
 

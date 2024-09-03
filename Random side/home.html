@@ -28,7 +28,7 @@
 			<ul>
 				<li>
 					<a href="#">
-						<i class="bx bxs-grid-alt"></i>
+						<i class="bx bxs-grid-alt" id="sidebar_btn"></i>
 						<span class="nav-item">Dashboard</span>
 					</a>
 					<span class="tooltip"> Dashboard</span>
@@ -36,7 +36,7 @@
 				</li>
 				<li>
 					<a href="#">
-						<i class="bx bxs-backpack"></i>
+						<i class="bx bxs-backpack" id="sidebar_btn"></i>
 						<span class="nav-item">Inventory</span>
 					</a>
 					<span class="tooltip"> Inventory Management</span>
@@ -44,7 +44,7 @@
 				</li>
 				<li>
 					<a href="#">
-						<i class="bx bxs-calendar"></i>
+						<i class="bx bxs-calendar" id="sidebar_btn"></i>
 						<span class="nav-item">Reservation</span>
 					</a>
 					<span class="tooltip"> Reservation Management</span>
@@ -52,7 +52,7 @@
 				</li>
 				<li>
 					<a href="#">
-						<i class="bx bxs-bell"></i>
+						<i class="bx bxs-bell" id="sidebar_btn"></i>
 						<span class="nav-item">Reports</span>
 					</a>
 					<span class="tooltip">Reports Management</span>
@@ -60,7 +60,7 @@
 				</li>
 				<li>
 					<a href="#">
-						<i class="bx bxs-like"></i>
+						<i class="bx bxs-like" id="sidebar_btn"></i>
 						<span class="nav-item">Users</span>
 					</a>
 					<span class="tooltip"> User Management</span>
@@ -68,7 +68,7 @@
 				</li>
 				<li>
 					<a href="#">
-						<i class="bx bx-location-plus"></i>
+						<i class="bx bx-location-plus" id="sidebar_btn"></i>
 						<span class="nav-item">Help/Support</span>
 					</a>
 					<span class="tooltip"> Help/Support</span>
@@ -76,7 +76,7 @@
 				</li>
 				<li>
 					<a href="#">
-						<i class="bx bx-cog"></i>
+						<i class="bx bx-cog" id="sidebar_btn"></i>
 						<span class="nav-item">Settings</span>
 					</a>
 					<span class="tooltip"> Settings</span>
@@ -84,7 +84,7 @@
 				</li>
 				<li>
 					<a href="#">
-						<i class="bx-log-out"></i>
+						<i class="bx-log-out" id="sidebar_btn"></i>
 						<span class="nav-item">Logout</span>
 					</a>
 					<span class="tooltip"> Logout</span>
@@ -108,10 +108,14 @@
 <script>
 		let btn = document.querySelector('#btn')
 		let sidebar = document.querySelector('.sidebar')
+		let sidebarbtn = document.querySelector('#sidebar_btn')
 
 		btn.onclick = function	() {
 			sidebar.classList.toggle('active')
+		}
 
+		sidebarbtn.onclick = function	() {
+			sidebar.classList.toggle('active')
 		}
 </script>
 </html>
