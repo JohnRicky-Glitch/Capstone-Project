@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+	<link rel="stylesheet" href="home.css">
+</head>
+<body>
+	<div class="sidebar">
+		<div class="top">
+			<div class="logo">
+				<i class="bx bxl-codepen"></i>
+				<span>JUANofUS</span>
+			</div>
+				<i class="bx bx-menu" id="btn"></i>
+		</div>
+		<div class="user">
+			<img src="ricky.jfif" alt="" class="user-img">
+			
+			<div><p class="bold">Ricky Gwapo</p>
+				<p>ADMIN</p>
+			</div>
+		</div>
+			<ul>
+				<li>
+					<a href="#">
+						<i class="bx bxs-grid-alt" id="sidebar_btn"></i>
+						<span class="nav-item">Dashboard</span>
+					</a>
+					<span class="tooltip"> Dashboard</span>
+
+				</li>
+				<li>
+					<a href="#">
+						<i class="bx bxs-backpack" id="sidebar_btn"></i>
+						<span class="nav-item">Inventory</span>
+					</a>
+					<span class="tooltip"> Inventory Management</span>
+
+				</li>
+				<li>
+					<a href="#">
+						<i class="bx bxs-calendar" id="sidebar_btn"></i>
+						<span class="nav-item">Reservation</span>
+					</a>
+					<span class="tooltip"> Reservation Management</span>
+
+				</li>
+				<li>
+					<a href="#">
+						<i class="bx bxs-bell" id="sidebar_btn"></i>
+						<span class="nav-item">Reports</span>
+					</a>
+					<span class="tooltip">Reports Management</span>
+
+				</li>
+				<li>
+					<a href="#">
+						<i class="bx bxs-like" id="sidebar_btn"></i>
+						<span class="nav-item">Users</span>
+					</a>
+					<span class="tooltip"> User Management</span>
+
+				</li>
+				<li>
+					<a href="#">
+						<i class="bx bx-location-plus" id="sidebar_btn"></i>
+						<span class="nav-item">Help/Support</span>
+					</a>
+					<span class="tooltip"> Help/Support</span>
+
+				</li>
+				<li>
+					<a href="#">
+						<i class="bx bx-cog" id="sidebar_btn"></i>
+						<span class="nav-item">Settings</span>
+					</a>
+					<span class="tooltip"> Settings</span>
+
+				</li>
+				<li>
+					<a href="#">
+						<i class="bx-log-out" id="sidebar_btn"></i>
+						<span class="nav-item">Logout</span>
+					</a>
+					<span class="tooltip"> Logout</span>
+
+				</li>
+
+
+			</ul>
+	</div>
+
+
+
+	<!-- ==================MAIN CONTENT================ -->
+<div class="main-content">
+	<div class="container"></div>
+	<h1>Ricky</h1>
+
+</div>
+</body>
+
+<script>
+		let btn = document.querySelector('#btn')
+		let sidebar = document.querySelector('.sidebar')
+		let sidebarbtn = document.querySelector('#sidebar_btn')
+
+		btn.onclick = function	() {
+			sidebar.classList.toggle('active')
+		}
+
+		sidebarbtn.onclick = function	() {
+			sidebar.classList.toggle('active')
+		}
+</script>
+</html>
