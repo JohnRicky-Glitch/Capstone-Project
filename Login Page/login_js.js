@@ -1,23 +1,13 @@
-const wrapper = document.querySelector('.wrapper');
-const registerLink = document.querySelector('.register-link');
-const loginLink = document.querySelector('.login-link');
-
-const loginButton = document.querySelector('.login-button');
-const iconClose = document.querySelector('.icon-close');
-
-
-loginLink.addEventListener('click', ()=>{
-    wrapper.classList.add('active');
+document.getElementById("loginBtn").addEventListener("click", function () {
+  var loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
+  loginModal.show();
 });
 
-registerLink.addEventListener('click', ()=>{
-    wrapper.classList.remove('active');
-});
-
-loginButton.addEventListener('click', ()=>{
-    wrapper.classList.add('active-open');
-});
-
-iconClose.addEventListener('click', ()=>{
-    wrapper.classList.remove('active-open');
+document.getElementById("showRegisterForm").addEventListener("click", function (e) {
+  e.preventDefault();
+  var loginModal = bootstrap.Modal.getInstance(document.getElementById("loginModal"));
+  loginModal.hide();
+  
+  var registerModal = new bootstrap.Modal(document.getElementById("registerModal"));
+  registerModal.show();
 });
