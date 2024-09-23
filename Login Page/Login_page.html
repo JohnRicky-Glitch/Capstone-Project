@@ -36,7 +36,7 @@
           </li>
           <li class="nav-item">
             <button class="btn btn-outline-light" id="loginBtn">Login</button> 
-          </li> 
+          </li>
         </ul> 
       </div>
     </div>
@@ -142,7 +142,7 @@
         <form id="loginForm">
           <div class="mb-3">
             <label for="login-username" class="form-label">Barangay ID Number</label>
-            <input type="number" class="form-control" id="login-username" required>
+            <input type="text" class="form-control" id="login-username" required>
           </div>
           <div class="mb-3">
             <label for="login-password" class="form-label">Password</label>
@@ -169,37 +169,53 @@
 
 <!-- Registration Modal -->
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title w-100 text-center" id="registerModalLabel">REGISTER</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
-        </div> 
-        <div class="modal-body"> 
-          <!-- Register Form -->
-          <form id="registerForm">
-                       <div class="mb-3">
-              <label for="register-barangayID" class="form-label">Barangay ID Number</label>
-              <input type="number" class="form-control" id="register-barangayID" placeholder="Enter your Barangay ID" required>
-            </div>
-            <div class="mb-3">
-              <label for="register-fullname" class="form-label">Full Name</label>
-              <input type="text" class="form-control" id="register-fullname" placeholder="Enter your full name" required>
-            </div>
-            <div class="mb-3">
-              <label for="register-password" class="form-label">Password</label> 
-              <input type="password" class="form-control" id="register-password" placeholder="Enter your password" required> 
-            </div> 
-            <div class="mb-3">
-              <label for="register-password" class="form-label">Confirm Password</label> 
-              <input type="password" class="form-control" id="register-password" placeholder="Enter your password" required> 
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Register</button> 
-          </form>
-        </div> 
-      </div> 
-    </div> 
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title w-100 text-center" id="registerModalLabel">REGISTER</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Register Form -->
+        <form id="registerForm">
+          <div class="mb-3">
+            <label for="register-barangayID" class="form-label">Barangay ID Number</label>
+            <input type="text" class="form-control" id="register-barangayID" placeholder="Enter your Barangay ID" required>
+          </div>
+          <!-- Name Inputs -->
+          <div class="mb-3">
+            <label for="register-lastname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="register-lastname" placeholder="Enter your last name" required>
+          </div>
+          <div class="mb-3">
+            <label for="register-firstname" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="register-firstname" placeholder="Enter your first name" required>
+          </div>
+          <div class="mb-3">
+            <label for="register-middlename" class="form-label">Middle Name</label>
+            <input type="text" class="form-control" id="register-middlename" placeholder="Enter your middle name">
+          </div>
+          <!-- Contact Number Input -->
+          <div class="mb-3">
+            <label for="register-contact" class="form-label">Contact Number</label>
+            <input type="tel" class="form-control" id="register-contact" placeholder="Enter your contact number" required>
+          </div>
+          <!-- Password Inputs -->
+          <div class="mb-3">
+            <label for="register-password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="register-password" placeholder="Enter your password" required>
+          </div>
+          <div class="mb-3">
+            <label for="register-confirm-password" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="register-confirm-password" placeholder="Confirm your password" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+      </div>
+    </div>
   </div>
+</div>
+
 
 <!-- Bootstrap JS and dependencies -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
