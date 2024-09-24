@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User-dash</title>
+
+
+    <!-- Add Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<!-- Montserrat Font -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="User.css">
+</head>
+<body>
+    <div class="grid-container">
+        <!-- Header -->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined">menu</span>
+        </div>
+        <div class="header-left">
+          <span class="material-icons-outlined">search</span>
+        </div>
+        <div class="header-right">
+          <span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined">email</span>
+          <span class="material-icons-outlined">account_circle</span>
+        </div>
+      </header>
+      <!-- End Header -->
+
+        <!-- Sidebar -->
+        <aside id="sidebar">
+
+            <div class="sidebar-title">
+              <div class="sidebar-brand">
+                <!-- <span class="material-icons-outlined">shopping_cart</span> JUAN of US -->
+                  <h1>JuanofUs</h1>
+              </div>
+              <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+            </div>
+    
+            <ul class="sidebar-list">
+              <li class="sidebar-list-item">
+                <a href="#" data-target="user-dashboard">
+                  <span class="material-icons-outlined">dashboard</span> Dashboard
+                </a>
+              </li>
+              <li class="sidebar-list-item">
+                <a href="#" data-target="appointment">
+                  <span class="material-icons-outlined">inventory_2</span> Appointment
+                </a>
+              </li>
+              <li class="sidebar-list-item">
+                <a href="#" data-target="reservation">
+                  <span class="material-icons-outlined">category</span> Reservation
+                </a>
+              </li>
+              <li class="sidebar-list-item">
+                <a href="#" data-target="user-notification">
+                  <span class="material-icons-outlined">groups</span> Notification
+                </a>
+              </li>
+            </ul>
+          </aside>
+          <!-- End Sidebar -->
+
+          <main class="main-container">
+
+                        <!-- ==============DASHBOARD START -->
+                      <section id="user-dashboard" class="content-section">
+                        <div class="container">
+                            <div class="main-title text-center">
+                                <h2>DASHBOARD</h2>
+                            </div>
+
+                            <!-- Welcome Section -->
+                            <div class="welcome-section text-center">
+                                <h3>Welcome, [User Name]!</h3>
+                                <p>Here's a quick overview of your activities.</p>
+                            </div>
+
+                            <!-- Activity Overview (Clickable Cards) -->
+                            <div class="main-cards">
+                                <div class="card" id="borrowed-card">
+                                    <div class="card-inner">
+                                        <h2>Borrowed:</h2>
+                                        <div>
+                                        <h1 id="borrowed-items-count">5</h1>
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <div class="card" id="returned-card">
+                                    <div class="card-inner">
+                                        <h2>Returned:</h2>
+                                        <h2><span id="returned-items-count">4</span></h2>
+                                    </div>
+                                </div>
+
+                                <div class="card" id="overdue-card">
+                                    <div class="card-inner">
+                                        <h2>Overdue:</h2>
+                                        <h2><span id="overdue-items-count">1</span></h2>
+                                    </div>
+                                </div>
+
+                                <div class="card" id="appointments-card">
+                                    <div class="card-inner">
+                                        <h2>Appointments:</h2>
+                                        <h2><span id="appointments-count">0</span></h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tables (Initially Hidden) -->
+                            <div class="table-section" id="borrowed-table" style="display: none;">
+                                <h3>Items Borrowed</h3>
+                                <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Number</th>
+                                            <th>Item Name</th>
+                                            <th>Borrow Date</th>
+                                            <th>Due Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+
+                            <div class="table-section" id="returned-table" style="display: none;">
+                                <h3>Items Returned</h3>
+                                <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Number</th>
+                                            <th>Item Name</th>
+                                            <th>Borrow Date</th>
+                                            <th>Due Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+
+                            <div class="table-section" id="overdue-table" style="display: none;">
+                                <h3>Overdue</h3>
+                                <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Number</th>
+                                            <th>Item Name</th>
+                                            <th>Borrow Date</th>
+                                            <th>Due Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+
+                            <!-- Appointments Table (New) -->
+                            <div class="table-section" id="appointments-table" style="display: none;">
+                                <h3>Appointments Made</h3>
+                                <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Appointment Number</th>
+                                            <th>Appointment Title</th>
+                                            <th>Appointment Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+
+                            <!-- Upcoming Events or Notifications -->
+                            <div class="notifications-section">
+                                <h4 class="text-center">Upcoming Events</h4>
+                                <ul id="event-list" class="list-group">
+                                    <!-- Events will be dynamically added here -->
+                                </ul>
+                            </div>
+                        </div>
+                      </section>
+                  
+                              <!-- ==============APPOINTMENT START -->
+                    <section id="appointment" class="content-section" style="display:none;">
+                      <h2>APPOINTMENT</h2>
+                    
+                      <!-- Appointment Form --> 
+                      <form id="appointment-form"> 
+                        <!-- Document Type Dropdown -->
+                        <label for="document-type">Select Document Type:</label>
+                        <select id="document-type" name="document-type">
+                          <option value="Brgy ID">Brgy ID</option>
+                          <option value="Brgy Clearance">Brgy Clearance</option>
+                          <option value="Proof of Residency">Proof of Residency</option>
+                          <option value="Business Permit">Business Permit</option>
+                        </select>
+
+                        <!-- Date Selection -->
+                        <label for="appointment-date">Select Date:</label>
+                        <input type="date" id="appointment-date" name="appointment-date" required>
+
+                        <!-- Time Slot Dropdown (Initially disabled) -->
+                        <label for="time-slot">Select Time Slot:</label>
+                        <select id="time-slot" name="time-slot" disabled>
+                          <option value="8-9AM">8-9 AM</option>
+                          <option value="9-10AM">9-10 AM</option>
+                          <option value="10-11AM">10-11 AM</option>
+                          <option value="11AM-12PM">11 AM - 12 PM</option>
+                          <option value="1-2PM">1-2 PM</option>
+                          <option value="2-3PM">2-3 PM</option>
+                        </select>
+
+                        <!-- Submit Button -->
+                        <button type="submit">Submit Appointment</button>
+                      </form>
+
+                      <!-- Success Message --> 
+                      <p id="appointment-success" style="display:none;">Your appointment has been scheduled!</p> 
+                    </section>
+
+                    
+              <!-- ==============RESERVATION START -->
+              <section id="reservation" class="content-section" style="display:none;">
+                <div class="container">
+                    <div class="main-title text-center">
+                        <h2>Reservation</h2>
+                    </div>
+            
+                    <!-- Reservation Form -->
+                    <form id="reservation-form">
+                        <div class="form-group">
+                            <label for="item">Select Item</label>
+                            <select id="item" name="item" required>
+                                <option value="Chair">Chair</option>
+                                <option value="Short Table">Short Table</option>
+                                <option value="Long Table">Long Table</option>
+                                <option value="Tent">Tent</option>
+                            </select>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="quantity">How many?</label>
+                            <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="date">Reservation Date</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="time">Reservation Time</label>
+                            <input type="time" id="time" name="time" required>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="location">Event Location (within Quezon City)</label>
+                            <input type="text" id="location" name="location" placeholder="Enter event location" required>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="map">Pin Location on Map</label>
+                            <div id="map" style="height: 300px;"></div>
+                        </div>
+            
+                        <div class="form-group">
+                            <button type="submit" class="btn">Submit Reservation</button>
+                        </div>
+            
+                        <div id="availability-message" style="color:red;"></div>
+                    </form>
+                </div>
+            </section>
+
+               <!-- ==============NOTIFICATION START -->
+               <section id="user-notification" class="content-section" style="display:none;">
+                    <h2>NOTIFICATION</h2>
+                
+            </section>
+          </main>
+
+    </div>
+
+
+
+<!-- Scripts -->
+    <!-- Add Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- ApexCharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+    <!-- Custom JS -->
+    <script src="User.js"></script>
+</body>
+</html>

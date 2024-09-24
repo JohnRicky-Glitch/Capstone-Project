@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    
+    <!-- Add Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <div class="grid-container">
+
+      <!-- Header -->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined">menu</span>
+        </div>
+        <div class="header-left">
+          <span class="material-icons-outlined">search</span>
+        </div>
+        <div class="header-right">
+          <span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined">email</span>
+          <span class="material-icons-outlined">account_circle</span>
+        </div>
+      </header>
+      <!-- End Header -->
+
+      <!-- Sidebar -->
+      <aside id="sidebar">
+
+        <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <!-- <span class="material-icons-outlined">shopping_cart</span> JUAN of US -->
+              <h1>JuanofUs</h1>
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+
+        <ul class="sidebar-list">
+          <li class="sidebar-list-item">
+            <a href="#" data-target="dashboard">
+              <span class="material-icons-outlined">dashboard</span> Dashboard
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" data-target="reservation-management">
+              <span class="material-icons-outlined">inventory_2</span> Reservation Management
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" data-target="inventory-management">
+              <span class="material-icons-outlined">category</span> Inventory Management
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" data-target="notification-management">
+              <span class="material-icons-outlined">groups</span> Notification Management
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" data-target="user-management">
+              <span class="material-icons-outlined">fact_check</span> User Management
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" data-target="report-management">
+              <span class="material-icons-outlined">poll</span> Report Management
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" data-target="settings">
+              <span class="material-icons-outlined">settings</span> Settings
+            </a>
+          </li>
+        </ul>
+      </aside>
+      <!-- End Sidebar -->
+
+      <!-- Main -->
+      <main class="main-container">
+
+        <!-- ==============DASHBOARD START -->
+        <section id="dashboard" class="content-section">
+          <div class="main-title">
+            <h2>DASHBOARD</h2>
+          </div>
+
+          <div class="main-cards">
+            <div class="card">
+              <div class="card-inner">
+                <h3>ALL UTILITY/MATERIALS</h3>
+                <span class="material-icons-outlined">inventory_2</span>
+              </div>
+              <h1>80</h1>
+            </div>
+            <div class="card">
+              <div class="card-inner">
+                <h3>AVAILABLE</h3>
+                <span class="material-icons-outlined">category</span>
+              </div>
+              <h1>25</h1>
+            </div>
+            <div class="card">
+              <div class="card-inner">
+                <h3>REQUEST</h3>
+                <span class="material-icons-outlined">groups</span>
+              </div>
+              <h1>20</h1>
+            </div>
+            <div class="card">
+              <div class="card-inner">
+                <h3>LOW STOCK ALERTS</h3>
+                <span class="material-icons-outlined">notification_important</span>
+              </div>
+              <h1>1</h1>
+            </div>
+          </div>
+
+          <div class="charts">
+            <div class="charts-card">
+              <h2 class="chart-title">UTILITY/MATERIALS</h2>
+              <div id="bar-chart"></div>
+            </div>
+
+            <div class="charts-card">
+              <h2 class="chart-title">Item Usage Over Time</h2>
+              <div id="area-chart"></div>
+            </div>
+          </div>
+        </section>
+        <!-- ==============DASHBOARD END-->
+
+           <!-- Reservation Management -->
+<section id="reservation-management" class="content-section" style="display:none;">
+  <h2>Reservation Management</h2>
+
+  <!-- Enhanced Calendar -->
+  <div class="container">
+    <div class="calendar">
+      <div class="calendar-header">
+        <span class="month-picker" id="month-picker">May</span>
+        <div class="year-picker" id="year-picker">
+          <span class="year-change" id="prev-year"><</span>
+          <span id="year">2024</span>
+          <span class="year-change" id="next-year">></span>
+        </div>
+      </div>
+  
+      <div class="calendar-body">
+        <div class="calendar-week-days">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
+        </div>
+        <div class="calendar-days" id="calendar-days">
+          <!-- Dynamically generated days will appear here -->
+        </div>
+      </div>
+  
+      <div class="calendar-footer">
+        <span id="current-date">Today is <strong>September 17, 2024</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Document Reservation Requests -->
+  <h3>Document Reservation Requests</h3>
+  <input type="text" id="document-search" placeholder="Search by user name or date..." onkeyup="filterTable('document-request-table')">
+  <table id="document-request-table">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0, 'document-request-table')">Request ID</th>
+        <th onclick="sortTable(1, 'document-request-table')">Reservation Date</th>
+        <th onclick="sortTable(2, 'document-request-table')">User Name</th>
+        <th>Document Type</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Example Row -->
+      <tr>
+        <td>1001</td>
+        <td>09/20/2024</td>
+        <td>John Doe</td>
+        <td>Barangay Clearance</td>
+        <td><span class="status-btn pending">Pending</span></td>
+        <td>
+          <button class="action-btn approve-btn" onclick="confirmAction(this, 'approved')">Approve</button>
+          <button class="action-btn deny-btn" onclick="confirmAction(this, 'denied')">Deny</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>1002</td>
+        <td>09/22/2024</td>
+        <td>John Doe</td>
+        <td>Barangay Clearance</td>
+        <td><span class="status-btn pending">Pending</span></td>
+        <td>
+          <button class="action-btn approve-btn" onclick="confirmAction(this, 'approved')">Approve</button>
+          <button class="action-btn deny-btn" onclick="confirmAction(this, 'denied')">Deny</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>1003</td>
+        <td>09/21/2024</td>
+        <td>John Doe</td>
+        <td>Barangay Clearance</td>
+        <td><span class="status-btn pending">Pending</span></td>
+        <td>
+          <button class="action-btn approve-btn" onclick="confirmAction(this, 'approved')">Approve</button>
+          <button class="action-btn deny-btn" onclick="confirmAction(this, 'denied')">Deny</button>
+        </td>
+      </tr>
+      <!-- Additional rows here -->
+    </tbody>
+  </table>
+
+  <!-- Material Borrow Request Table -->
+  <h3>Pending Material Borrow Requests</h3>
+  <input type="text" id="material-search" placeholder="Search by item or user name..." onkeyup="filterTable('material-request-table')">
+  <table id="material-request-table">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0, 'material-request-table')">Request ID</th>
+        <th onclick="sortTable(1, 'material-request-table')">Reservation Date</th>
+        <th onclick="sortTable(2, 'material-request-table')">User Name</th>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2001</td>
+        <td>09/22/2024</td>
+        <td>Alex Johnson</td>
+        <td>Plastic Chairs</td>
+        <td>15</td>
+        <td><span class="status-btn pending">Pending</span></td>
+        <td>
+          <button class="action-btn approve-btn" onclick="confirmAction(this, 'approved')">Approve</button>
+          <button class="action-btn deny-btn" onclick="confirmAction(this, 'denied')">Deny</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>2002</td>
+        <td>09/22/2024</td>
+        <td>Alex Johnson</td>
+        <td>Plastic Chairs</td>
+        <td>15</td>
+        <td><span class="status-btn pending">Pending</span></td>
+        <td>
+          <button class="action-btn approve-btn" onclick="confirmAction(this, 'approved')">Approve</button>
+          <button class="action-btn deny-btn" onclick="confirmAction(this, 'denied')">Deny</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>2003</td>
+        <td>09/22/2024</td>
+        <td>Alex Johnson</td>
+        <td>Plastic Chairs</td>
+        <td>15</td>
+        <td><span class="status-btn pending">Pending</span></td>
+        <td>
+          <button class="action-btn approve-btn" onclick="confirmAction(this, 'approved')">Approve</button>
+          <button class="action-btn deny-btn" onclick="confirmAction(this, 'denied')">Deny</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>2004</td>
+        <td>09/22/2024</td>
+        <td>Alex Johnson</td>
+        <td>Plastic Chairs</td>
+        <td>15</td>
+        <td><span class="status-btn pending">Pending</span></td>
+        <td>
+          <button class="action-btn approve-btn" onclick="confirmAction(this, 'approved')">Approve</button>
+          <button class="action-btn deny-btn" onclick="confirmAction(this, 'denied')">Deny</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>2005</td>
+        <td>09/22/2024</td>
+        <td>Alex Johnson</td>
+        <td>Plastic Chairs</td>
+        <td>15</td>
+        <td><span class="status-btn pending">Pending</span></td>
+        <td>
+          <button class="action-btn approve-btn" onclick="confirmAction(this, 'approved')">Approve</button>
+          <button class="action-btn deny-btn" onclick="confirmAction(this, 'denied')">Deny</button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>2006</td>
+        <td>09/22/2024</td>
+        <td>Alex Johnson</td>
+        <td>Table</td>
+        <td>15</td>
+        <td><span class="status-btn pending">Pending</span></td>
+        <td>
+          <button class="action-btn approve-btn" onclick="confirmAction(this, 'approved')">Approve</button>
+          <button class="action-btn deny-btn" onclick="confirmAction(this, 'denied')">Deny</button>
+        </td>
+      </tr>
+      <!-- More rows here -->
+    </tbody>
+  </table>
+</section>
+      
+        <!-- ==============RESERVATION MANAGEMENT END -->
+
+
+       <!-- ==============INVENTORY MANAGEMENT START -->
+<section id="inventory-management" class="content-section" style="display:none;">
+  <h2>Inventory Management</h2>
+
+  <!-- Add New Item Button -->
+  <button class="action-btn" onclick="openAddItemModal()">Add New Item</button>
+
+  <!-- Add New Item Modal -->
+  <div id="addItemModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeAddItemModal()">&times;</span>
+      <h2>Add New Item</h2>
+      <form id="addItemForm">
+        <label for="newItemName">Item Name:</label>
+        <input type="text" id="newItemName" name="newItemName" required>
+
+        <label for="newItemImage">Image URL:</label>
+        <input type="text" id="newItemImage" name="newItemImage" required>
+
+        <label for="newItemQuantity">Quantity:</label>
+        <input type="number" id="newItemQuantity" name="newItemQuantity" min="0" required>
+
+        <button type="submit" class="action-btn">Add Item</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Inventory Table --> 
+  <table id="inventory-table"> 
+    <thead> 
+      <tr>
+        <th>Item Image</th>
+        <th>Item Name</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><img src="chair_high_res.jpg" alt="Plastic Chair" class="item-image"></td>
+        <td>Plastic Chair</td>
+        <td>20</td>
+        <td><span class="status available">Available</span></td>
+        <td>
+          <button class="action-btn" onclick="openModal('Plastic Chair', 'chair_high_res.jpg', 20, 0, 0, 'Available')">View</button>
+        </td>
+      </tr>
+      <!-- More inventory items here -->
+    </tbody>
+  </table>
+
+  <!-- Borrowed Items Section -->
+  <h2>Borrowed Items</h2>
+
+  <!-- Search Bar for Borrowed Items -->
+  <input type="text" id="borrowedSearch" onkeyup="searchBorrowedItems()" placeholder="Search for borrowed items.." style="margin-bottom: 10px; padding: 8px; width: 100%; max-width: 300px;">
+
+  <table id="borrowed-table">
+    <thead>
+      <tr>
+        <th>Borrow ID</th>
+        <th>Item Image</th>
+        <th>Item Name</th>
+        <th>Borrower</th>
+        <th>Date of Return</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2001</td>
+        <td><img src="borrowed_chair.jpg" alt="Plastic Chair" class="item-image"></td>
+        <td>Plastic Chair</td>
+        <td>John Doe</td>
+        <td>2024-09-20</td>
+        <td><a href="#" onclick="openMapModal(14.622832, 121.061880)">San Roque</a></td>
+        <td><button class="action-btn" onclick="viewBorrowDetails('Plastic Chair', 'John Doe', '2024-09-20', 'San Roque')">View</button></td>
+      </tr>
+      <!-- Add more borrowed items as needed -->
+    </tbody>
+  </table>
+
+  <!-- Item Details Modal -->
+  <div id="itemModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="carousel">
+        <img src="" alt="Item Image" id="modalImage" class="modal-image">
+      </div>
+      <h2 id="modalItemName">Item Name</h2>
+      <p id="modalDescription">This is a description of the item.</p>
+      <p>Total Quantity: <span id="modalTotalQuantity">0</span></p>
+      <p>Reserved: <span id="modalReservedQuantity">0</span></p>
+      <p>Out of Stock: <span id="modalOutQuantity">0</span></p>
+      <p>Status: <span id="modalStatus">Available</span></p>
+      <h3>Reservation History (Admin Only)</h3>
+      <ul id="reservationHistory">
+        <li>No reservation history available.</li>
+      </ul>
+      <button class="admin-btn" id="editItemBtn">Edit Item</button>
+      <button class="admin-btn" id="deleteItemBtn">Delete Item</button>
+    </div>
+  </div>
+
+  <!-- Map Modal for Borrowed Items Location -->
+  <div id="mapModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeMapModal()">&times;</span>
+      <h2>Item Location</h2>
+      <div id="map" style="height: 400px; width: 100%;"></div>
+    </div> 
+  </div> 
+</section>
+
+
+
+        
+
+        <!-- ==============NOTIFICATION MANAGEMENT START ============== -->
+<section id="notification-management" class="content-section" style="display:none;">
+  <h2>Notification Management</h2>
+
+  <!-- Create New Notification Section -->
+  <div class="notification-creation">
+    <h3>Create New Notification</h3>
+    <form id="create-notification-form">
+      <!-- Notification Title -->
+      <div class="form-group">
+        <label for="notification-title">Title:</label>
+        <input type="text" id="notification-title" name="title" placeholder="Enter notification title" required>
+      </div>
+
+      <!-- Notification Content -->
+      <div class="form-group">
+        <label for="notification-content">Content:</label>
+        <textarea id="notification-content" name="content" rows="4" placeholder="Enter your message..." required></textarea>
+      </div>
+
+      <!-- Target Audience -->
+      <div class="form-group">
+        <label for="notification-recipients">Recipients:</label>
+        <select id="notification-recipients" name="recipients" required>
+          <option value="" disabled selected>Select Recipients</option>
+          <option value="all">All Users</option>
+          <option value="group1">User Group 1</option>
+          <option value="group2">User Group 2</option>
+          <!-- Additional groups here -->
+        </select>
+      </div>
+
+      <!-- Notification Type -->
+      <div class="form-group">
+        <label for="notification-type">Type:</label>
+        <select id="notification-type" name="type" required>
+          <option value="" disabled selected>Select Notification Type</option>
+          <option value="announcement">Announcement</option>
+          <option value="alert">Alert</option>
+          <option value="reminder">Reminder</option>
+        </select>
+      </div>
+
+      <!-- Schedule Sending -->
+      <div class="form-group">
+        <label for="schedule-date">Schedule:</label>
+        <input type="datetime-local" id="schedule-date" name="schedule-date">
+      </div>
+
+      <!-- Notification Priority -->
+      <div class="form-group">
+        <label for="notification-priority">Priority:</label>
+        <select id="notification-priority" name="priority" required>
+          <option value="normal">Normal</option>
+          <option value="urgent">Urgent</option>
+        </select>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-group action-buttons">
+        <button type="submit" class="btn-primary">Send Notification</button>
+        <button type="reset" class="btn-secondary">Save as Draft</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Notifications Overview Section -->
+  <div class="notification-overview">
+    <h3>All Notifications</h3>
+    <!-- Search Filter -->
+    <input type="text" id="notification-search" placeholder="Search notifications..." onkeyup="filterTable('notification-table')">
+
+    <!-- Notifications Table -->
+    <table id="notification-table">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0, 'notification-table')">Notification ID</th>
+          <th onclick="sortTable(1, 'notification-table')">Title</th>
+          <th onclick="sortTable(2, 'notification-table')">Date Sent</th>
+          <th>Recipients</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>101</td>
+          <td>System Maintenance</td>
+          <td>09/15/2024</td>
+          <td>All Users</td>
+          <td>Alert</td>
+          <td><span class="status-btn sent">Sent</span></td>
+          <td>
+            <button class="action-btn" onclick="editNotification(101)">Edit</button>
+            <button class="action-btn delete" onclick="deleteNotification(101)">Delete</button>
+          </td>
+        </tr>
+        <!-- Additional rows here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Notification Templates Section -->
+  <div class="notification-templates">
+    <h3>Templates</h3>
+    <select id="template-select">
+      <option value="template1">System Maintenance Template</option>
+      <option value="template2">Reminder Template</option>
+      <!-- More templates -->
+    </select>
+    <button onclick="applyTemplate()">Apply Template</button>
+  </div>
+
+  <!-- Notification Analytics Section -->
+  <div class="notification-analytics">
+    <h3>Analytics</h3>
+    <div class="stats">
+      <p>Total Notifications Sent: <span id="total-notifications">350</span></p>
+      <p>Open Rate: <span id="open-rate">65%</span></p>
+      <p>Click Rate: <span id="click-rate">30%</span></p>
+    </div>
+  </div>
+
+  <!-- Push Notification Settings -->
+  <div class="notification-settings">
+    <h3>Notification Settings</h3>
+    <form id="settings-form">
+      <!-- Enable/Disable Notifications -->
+      <div class="form-group">
+        <label>Enable Notifications:</label>
+        <input type="checkbox" id="enable-notifications" name="enable-notifications">
+      </div>
+
+      <!-- Frequency Settings -->
+      <div class="form-group">
+        <label for="frequency">Frequency:</label>
+        <select id="frequency" name="frequency">
+          <option value="immediate">Immediate</option>
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+        </select>
+      </div>
+
+      <!-- Channels -->
+      <div class="form-group">
+        <label>Notification Channels:</label>
+        <div class="channel-checkbox">
+          <input type="checkbox" id="email-channel" name="channel" value="email"> Email
+        </div>
+        <div class="channel-checkbox">
+          <input type="checkbox" id="sms-channel" name="channel" value="sms"> SMS
+        </div>
+        <div class="channel-checkbox">
+          <input type="checkbox" id="push-channel" name="channel" value="push"> Push Notification
+        </div>
+      </div>
+
+      <!-- Save Settings Button -->
+      <div class="form-group action-buttons">
+        <button type="submit" class="btn-primary">Save Settings</button>
+      </div>
+    </form>
+  </div>
+</section>
+<!-- ==============NOTIFICATION MANAGEMENT END ============== -->
+
+
+       <!-- ==============USER MANAGEMENT START ============== -->
+<section id="user-management" class="content-section" style="display:none;">
+  <h2>User Management</h2>
+
+  <!-- Search and Filter Section --> 
+  <div class="user-search-filter" style="margin-bottom: 20px;"> 
+    <input type="text" id="user-search" placeholder="Search users by name or Barangay ID" onkeyup="filterUsers()" style="padding: 10px; width: 250px;"> 
+    <select id="user-status-filter" onchange="filterUsersByStatus()" style="padding: 10px; margin-left: 10px;"> 
+      <option value="all">All</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+      <option value="banned">Banned</option>
+    </select>
+  </div>
+
+  <!-- User List Overview (Table) -->
+  <div class="user-list-overview" style="overflow-x:auto;">
+    <table id="user-table" style="width: 100%; border-collapse: collapse; text-align: left;">
+      <thead style="background-color: #007bff; color: white;">
+        <tr>
+          <th>User ID</th>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>Barangay ID</th>
+          <th>Status</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamically populated rows will go here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Add New User Section -->
+  <form id="add-user-form" style="margin-top: 20px;">
+    <input type="text" id="new-user-lastname" placeholder="Last Name" required style="padding: 10px; margin-right: 10px;">
+    <input type="text" id="new-user-firstname" placeholder="First Name" required style="padding: 10px; margin-right: 10px;">
+    <input type="text" id="new-user-middlename" placeholder="Middle Name" required style="padding: 10px; margin-right: 10px;">
+    <input type="text" id="new-user-barangay-id" placeholder="Barangay ID Number" required style="padding: 10px; margin-right: 10px;">
+    <input type="text" id="new-user-contact" placeholder="Contact Number" required style="padding: 10px; margin-right: 10px;">
+    <input type="text" id="new-user-address" placeholder="Address" required style="padding: 10px; margin-right: 10px;">
+    <button type="submit" class="btn-primary" style="padding: 10px 20px; background-color: #007bff; color: white; border: none;">Add User</button>
+  </form>
+
+  <!-- User Statistics Section -->
+  <div class="user-statistics" style="margin-top: 30px;">
+    <h3>Statistics</h3>
+    <p>Total Users: <span id="total-users">0</span></p>
+    <p>Active Users: <span id="active-users">0</span></p>
+    <p>Inactive Users: <span id="inactive-users">0</span></p>
+    <p>Banned Users: <span id="banned-users">0</span></p>
+  </div>
+</section>
+<!-- ==============USER MANAGEMENT END ============== -->
+
+
+
+       <!-- ==============REPORT MANAGEMENT START --> 
+<section id="report-management" class="content-section" style="display:none;"> 
+  <h2>Report Management</h2> 
+
+  <!-- Summary Dashboard -->
+  <div class="summary-dashboard">
+    <div class="summary-card">
+      <h3>Total Items Borrowed</h3>
+      <p id="total-borrowed">0</p>
+    </div>
+    <div class="summary-card">
+      <h3>Total Items Returned</h3>
+      <p id="total-returned">0</p>
+    </div>
+    <div class="summary-card">
+      <h3>Damaged Items</h3>
+      <p id="damaged-items">0</p>
+    </div>
+    <div class="summary-card">
+      <h3>Overdue Items</h3>
+      <p id="overdue-items">0</p>
+    </div>
+    <div class="summary-card">
+      <h3>Top Borrowers</h3>
+      <ul id="top-borrowers"></ul>
+    </div>
+    <div class="summary-card">
+      <h3>Most Borrowed Items</h3>
+      <ul id="most-borrowed-items"></ul>
+    </div>
+    <div class="summary-card">
+      <h3>Pending Requests</h3>
+      <p id="pending-requests">0</p>
+    </div>
+  </div>
+
+  <!-- Filters for Custom Reports -->
+  <div class="filters-section">
+    <h4>Generate Custom Report</h4>
+    <label for="date-range">Date Range:</label>
+    <input type="date" id="start-date" name="start-date"> to 
+    <input type="date" id="end-date" name="end-date">
+    <label for="category-filter">Category:</label>
+    <select id="category-filter">
+      <option value="all">All Categories</option>
+      <option value="books">Books</option>
+      <option value="electronics">Electronics</option>
+    </select>
+    <label for="user-filter">User:</label>
+    <input type="text" id="user-filter" placeholder="Enter user name or ID">
+    <button id="generate-report">Generate Report</button>
+  </div>
+
+  <!-- Detailed Reports -->
+  <div class="detailed-reports">
+    <h4>Detailed Reports</h4>
+    <div class="report-section">
+      <h5>Borrowed/Returned Items</h5>
+      <table id="borrowed-returned-report">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Item</th>
+            <th>Date Borrowed</th>
+            <th>Date Returned</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be dynamically inserted here -->
+        </tbody>
+      </table>
+      <button class="download-report" data-report="borrowed-returned">Download as Excel</button>
+    </div>
+    
+    <div class="report-section">
+      <h5>Damaged Items</h5>
+      <table id="damaged-items-report">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Item</th>
+            <th>Date Damaged</th>
+            <th>Damage Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be dynamically inserted here -->
+        </tbody>
+      </table>
+      <button class="download-report" data-report="damaged-items">Download as Excel</button>
+    </div>
+
+    <div class="report-section">
+      <h5>Overdue Items</h5>
+      <table id="overdue-items-report">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Item</th>
+            <th>Due Date</th>
+            <th>Days Overdue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be dynamically inserted here -->
+        </tbody>
+      </table>
+      <button class="download-report" data-report="overdue-items">Download as Excel</button>
+    </div>
+  </div>
+
+  <!-- Charts and Visuals -->
+  <div class="charts-section">
+    <h4>Activity Trends</h4>
+    <canvas id="borrowed-damaged-chart"></canvas>
+    <canvas id="category-distribution-chart"></canvas>
+  </div>
+
+</section> 
+<!-- ==============REPORT MANAGEMENT END -->
+
+
+        <!-- ==============SETTINGS START -->
+        <section id="settings" class="content-section" style="display:none;">
+          <h2>Settings</h2>
+        </section>
+        <!-- ==============SETTINGS END -->
+      </main>
+      <!-- End Main -->
+
+    </div>
+
+    <!-- Scripts -->
+    <!-- Add Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- ApexCharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
