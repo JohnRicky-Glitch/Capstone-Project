@@ -6,7 +6,7 @@
     <title>User-dash</title>
 
 
-    <!-- Add Leaflet -->
+    <!-- Add Leaflet CSS-->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
 <!-- Montserrat Font -->
@@ -20,21 +20,28 @@
 </head>
 <body>
     <div class="grid-container">
-        <!-- Header -->
-      <header class="header">
-        <div class="menu-icon" onclick="openSidebar()">
-          <span class="material-icons-outlined">menu</span>
-        </div>
-        <div class="header-left">
-          <span class="material-icons-outlined">search</span>
-        </div>
-        <div class="header-right">
-          <span class="material-icons-outlined">notifications</span>
-          <span class="material-icons-outlined">email</span>
-          <span class="material-icons-outlined">account_circle</span>
-        </div>
-      </header>
-      <!-- End Header -->
+
+                  <!-- Header -->
+<header class="header">
+  <div class="menu-icon" onclick="openSidebar()">
+    <span class="material-icons-outlined">menu</span>
+  </div> 
+  <div class="header-left"> 
+    <span class="material-icons-outlined">search</span> 
+  </div>
+  <div class="header-right">
+    <span class="material-icons-outlined">notifications</span>
+    <span class="material-icons-outlined">email</span>
+    <span class="material-icons-outlined account-icon" onclick="toggleAccountDropdown()">account_circle</span>
+
+    <!-- Dropdown for account -->
+    <div class="account-dropdown" id="accountDropdown">
+      <p>John Doe</p>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div> 
+</header> 
+<!-- End Header -->
 
         <!-- Sidebar -->
         <aside id="sidebar">
@@ -83,7 +90,7 @@
 
                             <!-- Welcome Section -->
                             <div class="welcome-section text-center">
-                                <h3>Welcome, [User Name]!</h3>
+                                <h3>Welcome, [User Name]!</h3>    <!-- Jonep palitan mo name ng nag login used last name nya-->
                                 <p>Here's a quick overview of your activities.</p>
                             </div>
 
@@ -184,15 +191,25 @@
                                 </table>
                             </div>
 
-                            <!-- Upcoming Events or Notifications -->
-                            <div class="notifications-section">
-                                <h4 class="text-center">Upcoming Events</h4>
-                                <ul id="event-list" class="list-group">
-                                    <!-- Events will be dynamically added here -->
-                                </ul>
+                           <!-- Upcoming Events or Notifications -->
+                          <div class="notifications-section">
+                            <h4 class="text-center">Upcoming Events</h4>
+                            <ul id="event-list" class="list-group">
+                                <!-- Events will be dynamically added here -->
+                            </ul>
+                          </div>
+
+                          <!-- Modal for Event Details -->
+                          <div id="eventModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h5 id="eventModalLabel">Event Details</h5>
+                                <div id="modal-body-content">
+                                    <!-- Event details will be populated here -->
+                                </div>
                             </div>
-                        </div>
-                      </section>
+                          </div>
+                                                </section>
                   
                               <!-- ==============APPOINTMENT START -->
                     <section id="appointment" class="content-section" style="display:none;">
@@ -225,7 +242,7 @@
                         </select>
 
                         <!-- Submit Button -->
-                        <button type="submit">Submit Appointment</button>
+                        <button class="submit-btn" type="submit">Submit Appointment</button>
                       </form>
 
                       <!-- Success Message --> 
@@ -233,64 +250,144 @@
                     </section>
 
                     
-              <!-- ==============RESERVATION START -->
-              <section id="reservation" class="content-section" style="display:none;">
-                <div class="container">
-                    <div class="main-title text-center">
-                        <h2>Reservation</h2>
-                    </div>
-            
-                    <!-- Reservation Form -->
-                    <form id="reservation-form">
-                        <div class="form-group">
-                            <label for="item">Select Item</label>
-                            <select id="item" name="item" required>
-                                <option value="Chair">Chair</option>
-                                <option value="Short Table">Short Table</option>
-                                <option value="Long Table">Long Table</option>
-                                <option value="Tent">Tent</option>
-                            </select>
-                        </div>
-            
-                        <div class="form-group">
-                            <label for="quantity">How many?</label>
-                            <input type="number" id="quantity" name="quantity" min="1" value="1" required>
-                        </div>
-            
-                        <div class="form-group">
-                            <label for="date">Reservation Date</label>
-                            <input type="date" id="date" name="date" required>
-                        </div>
-            
-                        <div class="form-group">
-                            <label for="time">Reservation Time</label>
-                            <input type="time" id="time" name="time" required>
-                        </div>
-            
-                        <div class="form-group">
-                            <label for="location">Event Location (within Quezon City)</label>
-                            <input type="text" id="location" name="location" placeholder="Enter event location" required>
-                        </div>
-            
-                        <div class="form-group">
-                            <label for="map">Pin Location on Map</label>
-                            <div id="map" style="height: 300px;"></div>
-                        </div>
-            
-                        <div class="form-group">
-                            <button type="submit" class="btn">Submit Reservation</button>
-                        </div>
-            
-                        <div id="availability-message" style="color:red;"></div>
-                    </form>
-                </div>
-            </section>
+              <!-- ==============RESERVATION START --> 
+<section id="reservation" class="content-section" style="display: none;"> 
+  <div class="modal-content"> 
+    <span class="close">&times;</span> 
+    <div class="container"> 
+      <div class="main-title text-center"> 
+        <h2>Select Items</h2> 
+      </div>
+ 
+      <form id="reservation-items-form"> 
+        <div class="form-group item-row"> 
+          <label for="chair">Chair</label>
+          <input type="number" id="chair-quantity" name="chair-quantity" min="0" value="0">
+          <span class="available">Available: 20</span>
+        </div>
 
-               <!-- ==============NOTIFICATION START -->
-               <section id="user-notification" class="content-section" style="display:none;">
-                    <h2>NOTIFICATION</h2>
-                
-            </section>
+        <div class="form-group item-row"> 
+          <label for="tent">Tent</label> 
+          <input type="number" id="tent-quantity" name="tent-quantity" min="0" value="0">
+          <span class="available">Available: 5</span>
+        </div>
+
+        <div class="form-group item-row">
+          <label for="short-table">Short Table</label> 
+          <input type="number" id="short-table-quantity" name="short-table-quantity" min="0" value="0"> 
+          <span class="available">Available: 15</span> 
+        </div> 
+ 
+        <div class="form-group item-row"> 
+          <label for="long-table">Long Table</label> 
+          <input type="number" id="long-table-quantity" name="long-table-quantity" min="0" value="0"> 
+          <span class="available">Available: 10</span> 
+        </div> 
+ 
+        
+
+        <div class="form-group">
+          <button class="next-btn" type="button" id="next-button" class="btn">Next</button>
+        </div>
+      </form> 
+    </div> 
+  </div> 
+</section> 
+ 
+<!-- ============== RESERVATION FORM MODAL ============= --> 
+<section id="reservation-form-modal" class="modal" style="display: none;"> 
+  <div class="modal-content"> 
+    <span class="close">&times;</span>
+    <div class="container">
+      <div class="main-title text-center">
+        <h2>Reservation Details</h2>
+      </div>
+
+      <form id="reservation-form">
+        <div class="form-group">
+          <label for="reservation-date">Reservation Date</label> 
+          <input type="date" id="reservation-date" name="reservation-date" required> 
+        </div> 
+ 
+        <div class="form-group"> 
+          <label for="pickup-time">Pick-Up Time</label> 
+          <input type="time" id="pickup-time" name="pickup-time" required> 
+        </div>
+ 
+        <div class="form-group"> 
+          <label for="return-date">Return Date</label> 
+          <input type="date" id="return-date" name="return-date" required> 
+        </div> 
+ 
+        <div class="form-group">
+          <label for="home-number">Home Number (Event Location)</label> 
+          <input type="text" id="home-number" name="home-number" placeholder="Home number of the event" required> 
+        </div> 
+
+        <div class="form-group">
+          <label for="street">Street (Event Location)</label> 
+          <input type="text" id="street" name="street" placeholder="Street of the event" required> 
+        </div> 
+ 
+        <div class="form-group"> 
+          <label for="map">Pin Location on Map</label> 
+          <div id="map" style="height: 400px;"></div> 
+        </div> 
+ 
+        <div class="form-group agreement">
+          <input type="checkbox" id="agreement" name="agreement" required>
+          <label for="agreement">"BAWAL MO TO MASIRA OR BABAYARAN MO"</label>
+      </div>
+
+        <div class="form-group">
+          <button class="S-btn" type="submit" class="btn" style="justify-content: center;">Submit Reservation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============== RESERVATION SUCCESS MODAL ============= --> 
+<section id="reservation-success-modal" class="modal" style="display: none;"> 
+  <div class="modal-content"> 
+    <span class="close">&times;</span> 
+    <div class="container"> 
+      <div class="main-title text-center">
+        <h2>Reservation Successful!</h2> 
+        <p>Your reservation has been submitted. Thank you!</p>  
+      </div>  
+      <button class="btn" id="close-success-modal">Close</button>   
+    </div>   
+  </div>    
+</section>
+
+                <!-- Notification Section -->
+<section id="user-notification" class="content-section" style="display: none;">
+  <h2>Notifications</h2>
+  <div class="notification-container">
+      <ul id="notification-list">
+          <!-- Notifications will be dynamically added here -->
+      </ul>
+  </div>
+  <div id="no-notifications-message" class="no-notifications">You have no new notifications.</div>
+</section>
+
+<!-- Modal for Notification Details -->
+<div class="modal" id="notificationModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="notificationModalTitle">Notification</h5>
+          </div>
+          <div class="modal-body" id="notificationModalBody">
+              <!-- Notification details will be dynamically added here -->
+          </div>
+          <div class="modal-footer">
+              <button class="close-btn" type="button" id="closeModalBtn">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
           </main>
 
     </div>
@@ -298,6 +395,8 @@
 
 
 <!-- Scripts -->
+ <!-- Include Leaflet Geocoder (for geocoding) -->
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <!-- Add Leaflet -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <!-- ApexCharts -->

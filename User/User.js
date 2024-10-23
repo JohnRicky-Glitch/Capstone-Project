@@ -1,3 +1,27 @@
+// HEADER TOGGLE
+function toggleAccountDropdown() {
+  const dropdown = document.getElementById('accountDropdown');
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+}
+
+function logout() {
+  // Here you can add the logout functionality
+  console.log('User logged out');
+  // Redirect to login page or call the logout API
+  window.location.href = 'login.html'; // Example redirect
+}
+
+// Optional: Close dropdown when clicking outside
+window.onclick = function(event) {
+  if (!event.target.matches('.account-icon')) {
+    const dropdown = document.getElementById('accountDropdown');
+    if (dropdown.style.display === 'block') {
+      dropdown.style.display = 'none';
+    }
+  }
+}
+
+
 // SIDEBAR TOGGLE
 
 let sidebarOpen = false;
@@ -38,21 +62,51 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.welcome-section h3').textContent = `Welcome, ${userName}!`;
 
     const events = [
-        { title: 'Community Workshop', date: 'September 25, 2024' },
-        { title: 'Cleanup Drive', date: 'October 1, 2024' },
-        { title: 'Charity Fun Run', date: 'October 10, 2024' }
+        { title: 'Community Workshop', date: 'September 25, 2024', description: 'A workshop for the local community to enhance skills.' },
+        { title: 'Cleanup Drive', date: 'October 1, 2024', description: 'Join us in cleaning up the neighborhood!' },
+        { title: 'Charity Fun Run', date: 'October 10, 2024', description: 'Participate in our charity run to raise funds for a good cause.' }
     ];
-
+    
     const eventList = document.getElementById('event-list');
-    events.forEach(event => {
+    const modal = document.getElementById('eventModal');
+    const modalBodyContent = document.getElementById('modal-body-content');
+    const eventModalLabel = document.getElementById('eventModalLabel');
+    const closeModal = document.querySelector('.close');
+    
+    // Populate events
+    events.forEach((event) => {
         const listItem = document.createElement('li');
         listItem.classList.add('list-group-item');
         listItem.innerHTML = `
-            <strong>${event.title}</strong>
+            <strong>${event.title}</strong> 
             <span>${event.date}</span>
         `;
+        
+        // Add click event listener to show modal with event details
+        listItem.addEventListener('click', () => {
+            eventModalLabel.textContent = event.title;
+            modalBodyContent.innerHTML = `
+                <p><strong>Date:</strong> ${event.date}</p>
+                <p>${event.description}</p>
+            `;
+            modal.style.display = 'flex';  // Show modal
+        });
+    
         eventList.appendChild(listItem);
     });
+    
+    // Close modal when "x" is clicked
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', (e) => {
+        if (e.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+    
 
     const borrowedItems = [
         { name: 'Book A', borrowDate: '2024-09-01', dueDate: '2024-09-10', status: 'Returned' },
@@ -243,107 +297,133 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // RESERVATION
 
-document.addEventListener('DOMContentLoaded', function () {
-    let map, marker;
+// Handle modal display and navigation
+document.getElementById("next-button").onclick = function() { 
+    document.getElementById("reservation").style.display = "none";
+    document.getElementById("reservation-form-modal").style.display = "block";
+};
 
-    // Initialize Leaflet Map centered around Quezon City
-    function initMap() {
-        const quezonCityBounds = [
-            [14.6166, 121.0246],  // North-West corner of Quezon City
-            [14.6760, 121.1500]   // South-East corner of Quezon City
-        ];
+// Close modals
+document.querySelectorAll(".close").forEach(closeButton => {
+    closeButton.onclick = function() {
+        this.closest(".modal").style.display = "none";
+    };
+});
 
-        map = L.map('map').setView([14.676041, 121.043700], 13); // Quezon City coordinates
+// Leaflet map initialization
+document.addEventListener("DOMContentLoaded", function() {
+    // Create the map and set default view on 19th Ave, Quezon City
+    var map = L.map('map').setView([14.6214, 121.0656], 16); // Default to 19th Ave, Quezon City
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-        // Limit the viewable map area to Quezon City
-        map.setMaxBounds(quezonCityBounds);
+    // Add a red outline around San Roque (adjust the polygon coordinates as needed)
+    var redOutline = L.polygon([
+        [14.6610, 121.0320], // Coordinates outlining San Roque
+        [14.6580, 121.0380],
+        [14.6550, 121.0350],
+        [14.6585, 121.0305]
+    ], {
+        color: 'red',
+        fillOpacity: 0.1
+    }).addTo(map);
 
-        // Add a marker on click
-        map.on('click', function(e) {
-            placeMarker(e.latlng);
-        });
-    }
-
-    function placeMarker(latlng) {
-        // Remove existing marker if present
+    // Allow users to pin location
+    var marker;
+    map.on('click', function(e) {
+        // Remove existing marker if any
         if (marker) {
             map.removeLayer(marker);
         }
 
-        // Add a new marker
-        marker = L.marker(latlng).addTo(map);
-
-        // Update the location field with the lat and lng
-        document.getElementById('location').value = latlng.lat + ', ' + latlng.lng;
-    }
-
-    // Update the map based on the location entered by the user
-    document.getElementById('location').addEventListener('input', function () {
-        const locationInput = document.getElementById('location').value;
-
-        // Use the location input as search criteria
-        const geocoder = L.Control.Geocoder.nominatim();
-
-        geocoder.geocode(locationInput, function (results) {
-            if (results && results.length > 0) {
-                const result = results[0];
-                const latlng = result.center;
-
-                // If the latlng is inside the Quezon City bounds, update the map
-                if (latlng.lat >= 14.6166 && latlng.lat <= 14.6760 && latlng.lng >= 121.0246 && latlng.lng <= 121.1500) {
-                    map.setView(latlng, 15);
-                    placeMarker(latlng);
-                } else {
-                    alert('Location must be within Quezon City.');
-                }
-            } else {
-                alert('Location not found.');
-            }
-        });
-    });
-
-    // Initialize the map
-    initMap();
-
-    // Reservation Form Submission
-    const reservationForm = document.getElementById('reservation-form');
-    reservationForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const item = document.getElementById('item').value;
-        const quantity = document.getElementById('quantity').value;
-        const date = document.getElementById('date').value;
-        const time = document.getElementById('time').value;
-        const location = document.getElementById('location').value;
-
-        if (!item || !quantity || !date || !time || !location) {
-            alert('Please complete all fields');
-            return;
-        }
-
-        // Availability Check (this is a basic example, replace with real logic)
-        if (quantity > 50) { // Example: max availability is 50 units
-            document.getElementById('availability-message').textContent = "Not enough items available.";
-        } else {
-            alert('Reservation submitted successfully!\n' + 
-                  'Item: ' + item + '\n' +
-                  'Quantity: ' + quantity + '\n' +
-                  'Date: ' + date + '\n' +
-                  'Time: ' + time + '\n' +
-                  'Location: ' + location);
-            reservationForm.reset();
-            if (marker) {
-                map.removeLayer(marker); // Remove marker after submission
-            }
-        }
+        // Add new marker at clicked location with popup showing coordinates
+        marker = L.marker(e.latlng).addTo(map)
+            .bindPopup("Pinned Location: " + e.latlng.lat + ", " + e.latlng.lng)
+            .openPopup();
     });
 });
 
-  
+// Ensure map covers the full container (CSS)
+const mapStyles = `
+  #map {
+    width: 100%;  /* Ensure the map takes the full width of its container */
+    height: 400px;  /* Adjust the height as necessary */
+  }
+`;
+
+// Inject map styles into the head dynamically
+const styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.innerText = mapStyles;
+document.head.appendChild(styleSheet);
 
   
-  
+// NOTIFICATION SECTION!================
+
+const notifications = [
+    { type: 'alert', title: 'System Maintenance', body: 'Scheduled maintenance will occur on October 25, 2024.', timestamp: '2 hours ago' },
+    { type: 'reminder', title: 'Document Submission', body: 'Please submit your pending documents by October 30, 2024.', timestamp: '1 day ago' },
+    { type: 'alert', title: 'Password Change Required', body: 'Your password must be changed before November 1, 2024.', timestamp: '2 days ago' },
+    { type: 'reminder', title: 'Meeting Reminder', body: 'Team meeting scheduled for October 27, 2024.', timestamp: '3 days ago' }
+];
+
+const notificationList = document.getElementById('notification-list');
+const noNotificationsMessage = document.getElementById('no-notifications-message');
+const notificationModal = document.getElementById('notificationModal');
+const notificationModalTitle = document.getElementById('notificationModalTitle');
+const notificationModalBody = document.getElementById('notificationModalBody');
+const closeModalBtn = document.getElementById('closeModalBtn');
+
+// Function to render notifications
+function renderNotifications() {
+    notificationList.innerHTML = ''; // Clear existing notifications
+
+    if (notifications.length === 0) {
+        noNotificationsMessage.style.display = 'block'; // Show no notifications message
+    } else {
+        noNotificationsMessage.style.display = 'none'; // Hide no notifications message
+
+        notifications.forEach((notification) => {
+            const listItem = document.createElement('li');
+            listItem.classList.add(notification.type === 'alert' ? 'notification-type-alert' : 'notification-type-reminder');
+
+            listItem.innerHTML = `
+                <div>
+                    <div class="notification-title">${notification.title}</div>
+                    <div class="notification-body">${notification.body}</div>
+                </div>
+                <div class="notification-timestamp">${notification.timestamp}</div>
+            `;
+
+            // Add click event to show modal with notification details
+            listItem.addEventListener('click', () => {
+                notificationModalTitle.textContent = notification.title;
+                notificationModalBody.innerHTML = `
+                    <p><strong>Date:</strong> ${notification.timestamp}</p>
+                    <p>${notification.body}</p>
+                `;
+                notificationModal.style.display = 'block'; // Show the modal
+            });
+
+            notificationList.appendChild(listItem);
+        });
+    }
+}
+
+// Close modal when close button is clicked
+closeModalBtn.addEventListener('click', () => {
+    notificationModal.style.display = 'none'; // Hide the modal when the button is clicked
+});
+
+// Close modal when clicking outside the modal content (optional)
+window.addEventListener('click', (e) => {
+    if (e.target === notificationModal) {
+        notificationModal.style.display = 'none';
+    }
+});
+
+// Initially render the notifications when the page loads
+document.addEventListener('DOMContentLoaded', renderNotifications);
