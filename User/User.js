@@ -108,97 +108,67 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     
 
-    const borrowedItems = [
-        { name: 'Book A', borrowDate: '2024-09-01', dueDate: '2024-09-10', status: 'Returned' },
-        { name: 'Book B', borrowDate: '2024-09-02', dueDate: '2024-09-11', status: 'Overdue' }
-    ];
+// Sample data for tables
+const reservations = [
+    { itemNumber: 1, itemName: 'Tent', borrowDate: '2024-09-01', dueDate: '2024-09-10', status: 'Borrowed' },
+    { itemNumber: 2, itemName: 'Table', borrowDate: '2024-09-02', dueDate: '2024-09-12', status: 'Returned' }
+];
 
-    const returnedItems = [
-        { name: 'Book A', borrowDate: '2024-09-01', returnDate: '2024-09-08', status: 'Returned' }
-    ];
+const appointments = [
+    { appointmentNumber: 1, appointmentTitle: 'Medical Checkup', appointmentDate: '2024-09-18' }
+];
 
-    const overdueItems = [
-        { name: 'Book B', borrowDate: '2024-09-02', dueDate: '2024-09-11', status: 'Overdue' }
-    ];
+const missingDamagedItems = [
+    { itemNumber: 1, itemName: 'Plastic Chair', borrowDate: '2024-08-20', dueDate: '2024-08-30', status: 'Missing' }
+];
 
-    // Example appointments data
-    const appointments = [
-        { title: 'Medical Checkup', date: '2024-09-18' },
-        { title: 'Dental Cleaning', date: '2024-09-25' }
-    ];
+const overdueItems = [];
 
-    // Function to populate table data with item number
-    function populateTable(tableId, data, columns) {
-        const tableBody = document.querySelector(`#${tableId} tbody`);
-        tableBody.innerHTML = ''; // Clear any existing rows
+// Function to populate tables dynamically
+function populateTable(tableId, data, columns) {
+    const tableBody = document.querySelector(`#${tableId} tbody`);
+    tableBody.innerHTML = ''; // Clear any previous data
 
-        data.forEach((item, index) => {
-            const row = document.createElement('tr');
-            row.innerHTML = columns.map(col => `<td>${item[col]}</td>`).join('');
-            tableBody.appendChild(row);
-        });
-    }
-
-    // Count and display data
-    document.getElementById('borrowed-items-count').textContent = borrowedItems.length;
-    document.getElementById('returned-items-count').textContent = returnedItems.length;
-    document.getElementById('overdue-items-count').textContent = overdueItems.length;
-    document.getElementById('appointments-count').textContent = appointments.length;
-
-    // Populate borrowed, returned, overdue, and appointments tables with the data
-    function populateTableWithNumber(tableId, data, columns) {
-        const tableBody = document.querySelector(`#${tableId} tbody`);
-        tableBody.innerHTML = '';
-
-        data.forEach((item, index) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `<td>${index + 1}</td>`; // Appointment/Item Number
-            row.innerHTML += columns.map(col => `<td>${item[col]}</td>`).join('');
-            tableBody.appendChild(row);
-        });
-    }
-
-    // Show borrowed items table
-    const borrowedCard = document.getElementById('borrowed-card');
-    borrowedCard.addEventListener('click', function () {
-        populateTableWithNumber('borrowed-table', borrowedItems, ['name', 'borrowDate', 'dueDate', 'status']);
-        document.getElementById('borrowed-table').style.display = 'block';
-        document.getElementById('returned-table').style.display = 'none';
-        document.getElementById('overdue-table').style.display = 'none';
-        document.getElementById('appointments-table').style.display = 'none';
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = columns.map(col => `<td>${item[col]}</td>`).join('');
+        tableBody.appendChild(row);
     });
+}
 
-    // Show returned items table
-    const returnedCard = document.getElementById('returned-card');
-    returnedCard.addEventListener('click', function () {
-        populateTableWithNumber('returned-table', returnedItems, ['name', 'borrowDate', 'dueDate', 'status']);
-        document.getElementById('borrowed-table').style.display = 'none';
-        document.getElementById('returned-table').style.display = 'block';
-        document.getElementById('overdue-table').style.display = 'none';
-        document.getElementById('appointments-table').style.display = 'none';
-    });
-
-    // Show overdue items table
-    const overdueCard = document.getElementById('overdue-card');
-    overdueCard.addEventListener('click', function () {
-        populateTableWithNumber('overdue-table', overdueItems, ['name', 'borrowDate', 'dueDate', 'status']);
-        document.getElementById('borrowed-table').style.display = 'none';
-        document.getElementById('returned-table').style.display = 'none';
-        document.getElementById('overdue-table').style.display = 'block';
-        document.getElementById('appointments-table').style.display = 'none';
-    });
-
-    // Show appointments table
-    const appointmentsCard = document.getElementById('appointments-card');
-    appointmentsCard.addEventListener('click', function () {
-        populateTableWithNumber('appointments-table', appointments, ['title', 'date']);
-        document.getElementById('borrowed-table').style.display = 'none';
-        document.getElementById('returned-table').style.display = 'none';
-        document.getElementById('overdue-table').style.display = 'none';
-        document.getElementById('appointments-table').style.display = 'block';
-    });
+// Event listeners for showing tables
+document.getElementById('reservation-card').addEventListener('click', function () {
+    populateTable('reservation-table', reservations, ['itemNumber', 'itemName', 'borrowDate', 'dueDate', 'status']);
+    document.getElementById('reservation-table').style.display = 'block';
+    document.getElementById('appointments-table').style.display = 'none';
+    document.getElementById('missing-damaged-table').style.display = 'none';
+    document.getElementById('overdue-table').style.display = 'none';
 });
 
+document.getElementById('appointment-card').addEventListener('click', function () {
+    populateTable('appointments-table', appointments, ['appointmentNumber', 'appointmentTitle', 'appointmentDate']);
+    document.getElementById('reservation-table').style.display = 'none';
+    document.getElementById('appointments-table').style.display = 'block';
+    document.getElementById('missing-damaged-table').style.display = 'none';
+    document.getElementById('overdue-table').style.display = 'none';
+});
+
+document.getElementById('missing-damage-card').addEventListener('click', function () {
+    populateTable('missing-damaged-table', missingDamagedItems, ['itemNumber', 'itemName', 'borrowDate', 'dueDate', 'status']);
+    document.getElementById('reservation-table').style.display = 'none';
+    document.getElementById('appointments-table').style.display = 'none';
+    document.getElementById('missing-damaged-table').style.display = 'block';
+    document.getElementById('overdue-table').style.display = 'none';
+});
+
+document.getElementById('overdue-card').addEventListener('click', function () {
+    populateTable('overdue-table', overdueItems, ['itemNumber', 'itemName', 'borrowDate', 'dueDate', 'status']);
+    document.getElementById('reservation-table').style.display = 'none';
+    document.getElementById('appointments-table').style.display = 'none';
+    document.getElementById('missing-damaged-table').style.display = 'none';
+    document.getElementById('overdue-table').style.display = 'block';
+});
+});
 
 
 

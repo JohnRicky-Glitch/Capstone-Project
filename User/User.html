@@ -94,102 +94,104 @@
                                 <p>Here's a quick overview of your activities.</p>
                             </div>
 
-                            <!-- Activity Overview (Clickable Cards) -->
+                               <!-- Activity Overview (Clickable Cards) -->
                             <div class="main-cards">
-                                <div class="card" id="borrowed-card">
-                                    <div class="card-inner">
-                                        <h2>Borrowed:</h2>
-                                        <div>
-                                        <h1 id="borrowed-items-count">5</h1>
-                                      </div>
-                                    </div>
+                              <div class="card" id="reservation-card">
+                                <div class="card-inner">
+                                  <h2>Reservation</h2>
+                                  <div>
+                                    <h1 id="reservation-items-count">5</h1>
+                                  </div>
                                 </div>
+                              </div>
 
-                                <div class="card" id="returned-card">
-                                    <div class="card-inner">
-                                        <h2>Returned:</h2>
-                                        <h2><span id="returned-items-count">4</span></h2>
-                                    </div>
+                              <div class="card" id="appointment-card">
+                                <div class="card-inner">
+                                  <h2>Appointment</h2>
+                                  <h2><span id="appointment-count">4</span></h2>
                                 </div>
+                              </div>
 
-                                <div class="card" id="overdue-card">
-                                    <div class="card-inner">
-                                        <h2>Overdue:</h2>
-                                        <h2><span id="overdue-items-count">1</span></h2>
-                                    </div>
+                              <div class="card" id="missing-damage-card">
+                                <div class="card-inner">
+                                  <h2>Missing/Damaged</h2>
+                                  <h2><span id="missing-damage-items-count">1</span></h2>
                                 </div>
+                              </div>
 
-                                <div class="card" id="appointments-card">
-                                    <div class="card-inner">
-                                        <h2>Appointments:</h2>
-                                        <h2><span id="appointments-count">0</span></h2>
-                                    </div>
+                              <div class="card" id="overdue-card">
+                                <div class="card-inner">
+                                  <h2>Overdue</h2>
+                                  <h2><span id="overdue-items-count">0</span></h2>
                                 </div>
+                              </div>
                             </div>
 
                             <!-- Tables (Initially Hidden) -->
-                            <div class="table-section" id="borrowed-table" style="display: none;">
-                                <h3>Items Borrowed</h3>
-                                <table class="styled-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Item Number</th>
-                                            <th>Item Name</th>
-                                            <th>Borrow Date</th>
-                                            <th>Due Date</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+                            <div class="table-section" id="reservation-table" style="display: none;">
+                              <h3>Reservations</h3>
+                              <table class="styled-table">
+                                <thead>
+                                  <tr>
+                                    <th>Item Number</th>
+                                    <th>Item Name</th>
+                                    <th>Borrow Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody></tbody>
+                              </table>
                             </div>
 
-                            <div class="table-section" id="returned-table" style="display: none;">
-                                <h3>Items Returned</h3>
-                                <table class="styled-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Item Number</th>
-                                            <th>Item Name</th>
-                                            <th>Borrow Date</th>
-                                            <th>Due Date</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+                            <div class="table-section" id="appointments-table" style="display: none;">
+                              <h3>Appointments</h3>
+                              <table class="styled-table">
+                                <thead>
+                                  <tr>
+                                    <th>Appointment Number</th>
+                                    <th>Appointment Title</th>
+                                    <th>Appointment Date</th>
+                                  </tr>
+                                </thead>
+                                <tbody></tbody>
+                              </table>
+                            </div>
+
+                            <div class="table-section" id="missing-damaged-table" style="display: none;">
+                              <h3>Missing/Damaged</h3>
+                              <table class="styled-table">
+                                <thead>
+                                  <tr>
+                                    <th>Item Number</th>
+                                    <th>Item Name</th>
+                                    <th>Borrow Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody></tbody>
+                              </table>
                             </div>
 
                             <div class="table-section" id="overdue-table" style="display: none;">
-                                <h3>Overdue</h3>
-                                <table class="styled-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Item Number</th>
-                                            <th>Item Name</th>
-                                            <th>Borrow Date</th>
-                                            <th>Due Date</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
+                              <h3>Overdue</h3>
+                              <table class="styled-table">
+                                <thead>
+                                  <tr>
+                                    <th>Item Number</th>
+                                    <th>Item Name</th>
+                                    <th>Borrow Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody></tbody>
+                              </table>
                             </div>
+                          </div>
 
-                            <!-- Appointments Table (New) -->
-                            <div class="table-section" id="appointments-table" style="display: none;">
-                                <h3>Appointments Made</h3>
-                                <table class="styled-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Appointment Number</th>
-                                            <th>Appointment Title</th>
-                                            <th>Appointment Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
+                           
 
                            <!-- Upcoming Events or Notifications -->
                           <div class="notifications-section">
